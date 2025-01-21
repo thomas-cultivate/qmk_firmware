@@ -99,6 +99,15 @@ struct __attribute__((packed)) xap_route_t {
     };
 };
 
+bool secure_exec_failed(xap_token_t token) {
+    if(!secure_is_locked()) {
+        xap_respond_failure(token, XAP_RESPONSE_FLAG_SECURE_FAILURE);
+        return true;
+    }
+    secure_activity_event();
+    return false;
+}
+
 #include <xap_generated.inl>
 
 bool xap_pre_execute_route(xap_token_t token, const xap_route_t *route) {
@@ -159,5 +168,7 @@ void xap_execute_route(xap_token_t token, const xap_route_t *routes, size_t max_
 }
 
 void xap_receive(xap_token_t token, const uint8_t *data, size_t length) {
-    xap_execute_route(token, xap_route_table, sizeof(xap_route_table) / sizeof(xap_route_t), data, length);
+    extern bool xap_route_route_handler(xap_token_t token, const uint8_t *data, size_t data_len);
+    xap_route_route_handler(token, data, length);
+    //xap_execute_route(token, xap_route_table, sizeof(xap_route_table) / sizeof(xap_route_t), data, length);
 }
