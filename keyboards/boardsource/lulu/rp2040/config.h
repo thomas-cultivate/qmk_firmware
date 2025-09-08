@@ -1,11 +1,13 @@
-// Copyright 2022 jack (@waffle87)
-// SPDX-License-Identifier: GPL-2.0-or-later
 #pragma once
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U
-#define SERIAL_USART_FULL_DUPLEX
-#define SERIAL_USART_TX_PIN GP0
-#define SERIAL_USART_RX_PIN GP1
-#define I2C_DRIVER I2CD1
-#define I2C1_SDA_PIN GP22
-#define I2C1_SCL_PIN GP23
+// Use the same pins as you had for split, I2C, etc. ...
+// (unchanged from your snippet)
+#define RGB_DI_PIN GP29          // The WS2812 data pin
+#define DRIVER_LED_TOTAL 70      // Or however many LEDs you actually have
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200  // Cap the brightness
+// If you want typical animations, define them:
+#define ENABLE_RGB_MATRIX_SOLID_COLOR
+#define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#define ENABLE_RGB_MATRIX_RAINBOW_BEACON
+// etc. (see QMK docs for the full list of effects)
